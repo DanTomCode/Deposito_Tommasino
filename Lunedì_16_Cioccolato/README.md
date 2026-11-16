@@ -11,3 +11,5 @@
 5. Gestisco il limite giornaliero e il resoconto in `Fabbrica`.
 
 6. Aggiungo il `main` dimostrativo e la documentazione.
+
+[ Codice ancora non adatto al running, ci sono ancora errori da sistemare o altro da aggiungere prima di poterlo eseguire correttamente.]
