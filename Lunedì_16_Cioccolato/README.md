@@ -14,6 +14,6 @@
 
  Codice ancora non adatto al running, ci sono ancora errori da sistemare o altro da aggiungere prima di poterlo eseguire correttamente.
 
- Errori presentati: ClassNotFoundException: Fabbrica
+ Errori presentati e fixati: ClassNotFoundException: Fabbrica
 
  Fix:  Java non trovava la classe compilata perché cercava nel classpath sbagliato. La classe Fabbrica.class si trova nella cartella out, quindi l’avvio doveva includere out nel classpath.
