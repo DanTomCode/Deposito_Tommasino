@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Avvia Fabbrica",
+            "request": "launch",
+            "mainClass": "Fabbrica",
+            "classPaths": [
+                "${workspaceFolder}\\out"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "preLaunchTask": "compila-fabbrica"
+        }
+    ]
+}

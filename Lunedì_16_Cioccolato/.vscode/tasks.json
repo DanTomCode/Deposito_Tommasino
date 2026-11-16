@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "compila-fabbrica",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "New-Item -ItemType Directory -Force -Path '${workspaceFolder}\\out' | Out-Null; javac -encoding UTF-8 -d '${workspaceFolder}\\out' '${workspaceFolder}\\src\\Cioccolato.java' '${workspaceFolder}\\src\\Cioccolatino.java' '${workspaceFolder}\\src\\Tavoletta.java' '${workspaceFolder}\\src\\CioccolatoCaldo.java' '${workspaceFolder}\\src\\Fabbrica.java'; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }"
+            ],
+            "problemMatcher": "$javac"
+        }
+    ]
+}
