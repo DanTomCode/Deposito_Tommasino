@@ -1,0 +1,8 @@
+it\corso\products\model\Product.class
+it\corso\products\service\ProductService.class
+it\corso\products\persistence\ProductEntity.class
+it\corso\products\api\ProductController.class
+it\corso\products\ProductsApiApplication.class
+it\corso\products\api\dto\ProductResponse.class
+it\corso\products\persistence\ProductRepository.class
+it\corso\products\api\dto\ProductRequest.class

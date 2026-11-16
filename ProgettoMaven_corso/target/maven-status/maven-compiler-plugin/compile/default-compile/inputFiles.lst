@@ -1,0 +1,12 @@
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\command\CreateOrderCommand.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\command\RecoveryAllOrdersCommand.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\controller\HomeController.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\controller\OrdersController.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\entity\Order.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\entity\OrderStatus.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\model\request\CreateOrderRequest.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\model\request\UpdateOrderStatusRequest.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\model\response\OrderResponse.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\OrderApplication.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\repository\OrdersRepository.java
+C:\Users\Daniele\Documents\ProgettoMaven_corso\src\main\java\order\boot\service\OrdersService.java

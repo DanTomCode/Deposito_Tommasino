@@ -1,0 +1,243 @@
+{
+  "info": {
+    "_postman_id": "a9af16b8-3f18-47a2-983a-78e01426bce1",
+    "name": "Gestione concessionari - esercitazione",
+    "description": "Test CRUD, query Name Convention, JPQL, statistiche e gestione errori. Importare prima database/02-populate-data.sql per i test sulle query e sugli errori relazionali. Le richieste CRUD creano e poi cancellano record di test propri.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "casaMadreId", "value": "1" },
+    { "key": "concessionarioId", "value": "1" },
+    { "key": "clienteId", "value": "1" },
+    { "key": "createdCasaMadreId", "value": "" },
+    { "key": "createdConcessionarioId", "value": "" },
+    { "key": "createdClienteId", "value": "" },
+    { "key": "testEmail", "value": "postman-test@example.com" }
+  ],
+  "item": [
+    {
+      "name": "Casa Madri CRUD",
+      "item": [
+        {
+          "name": "POST - Crea casa madre",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"ragioneSociale\":\"Postman Motors\",\"sedeLegale\":\"Roma\",\"paese\":\"Italia\",\"annoFondazione\":2000,\"fatturatoAnnuo\":1200000}" },
+            "url": "{{baseUrl}}/api/case-madri"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });", "pm.collectionVariables.set('createdCasaMadreId', pm.response.json().id);"] } }]
+        },
+        {
+          "name": "GET - Elenco case madri",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri" }
+        },
+        {
+          "name": "GET - Casa madre per ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/{{createdCasaMadreId}}" }
+        },
+        {
+          "name": "PUT - Modifica casa madre",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"ragioneSociale\":\"Postman Motors Aggiornata\",\"sedeLegale\":\"Roma\",\"paese\":\"Italia\",\"annoFondazione\":2000,\"fatturatoAnnuo\":1500000}" },
+            "url": "{{baseUrl}}/api/case-madri/{{createdCasaMadreId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Concessionari CRUD",
+      "item": [
+        {
+          "name": "POST - Crea concessionario",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"nome\":\"Postman Autos\",\"citta\":\"Roma\",\"indirizzo\":\"Via Roma 1\",\"telefono\":\"061234567\",\"fatturato\":220000,\"casaMadreId\":{{createdCasaMadreId}}}" },
+            "url": "{{baseUrl}}/api/concessionari"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });", "pm.collectionVariables.set('createdConcessionarioId', pm.response.json().id);"] } }]
+        },
+        {
+          "name": "GET - Elenco concessionari",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari" }
+        },
+        {
+          "name": "GET - Concessionario per ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/{{createdConcessionarioId}}" }
+        },
+        {
+          "name": "PUT - Modifica concessionario",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"nome\":\"Postman Autos\",\"citta\":\"Milano\",\"indirizzo\":\"Via Roma 1\",\"telefono\":\"061234567\",\"fatturato\":240000,\"casaMadreId\":{{createdCasaMadreId}}}" },
+            "url": "{{baseUrl}}/api/concessionari/{{createdConcessionarioId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clienti CRUD",
+      "item": [
+        {
+          "name": "POST - Crea cliente",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"nome\":\"Postman\",\"cognome\":\"Tester\",\"email\":\"{{testEmail}}\",\"telefono\":\"3331234567\",\"dataRegistrazione\":\"2026-11-02\",\"concessionarioId\":{{createdConcessionarioId}}}" },
+            "url": "{{baseUrl}}/api/clienti"
+          },
+          "event": [
+            { "listen": "prerequest", "script": { "exec": ["pm.collectionVariables.set('testEmail', 'postman-' + Date.now() + '@example.com');"] } },
+            { "listen": "test", "script": { "exec": ["pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });", "pm.collectionVariables.set('createdClienteId', pm.response.json().id);"] } }
+          ]
+        },
+        {
+          "name": "GET - Elenco clienti",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti" }
+        },
+        {
+          "name": "GET - Cliente per ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/{{createdClienteId}}" }
+        },
+        {
+          "name": "PUT - Modifica cliente",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"nome\":\"Postman\",\"cognome\":\"Tester Aggiornato\",\"email\":\"{{testEmail}}\",\"telefono\":\"3339876543\",\"dataRegistrazione\":\"2026-11-02\",\"concessionarioId\":{{createdConcessionarioId}}}" },
+            "url": "{{baseUrl}}/api/clienti/{{createdClienteId}}"
+          }
+        },
+        {
+          "name": "DELETE - Elimina cliente di test",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/clienti/{{createdClienteId}}" }
+        },
+        {
+          "name": "DELETE - Elimina concessionario di test",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/concessionari/{{createdConcessionarioId}}" }
+        },
+        {
+          "name": "DELETE - Elimina casa madre di test",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/case-madri/{{createdCasaMadreId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Query Name Convention",
+      "item": [
+        { "name": "Cliente - nome esatto", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/query/nome?nome=Mario" } },
+        { "name": "Cliente - cognome esatto", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/query/cognome?cognome=Rossi" } },
+        { "name": "Cliente - email", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/query/email?email=mario%40email.it" } },
+        { "name": "Cliente - nome contiene", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/query/nome-contiene?sequenza=ari" } },
+        { "name": "Cliente - cognome inizia con", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/query/cognome-inizia?prefisso=Ros" } },
+        { "name": "Cliente - registrati dopo", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/query/registrati-dopo?data=2025-01-15" } },
+        { "name": "Cliente - registrati tra date", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/query/registrati-tra?inizio=2025-01-15&fine=2025-01-31" } },
+        { "name": "Cliente - concessionario ID", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/query/concessionario/{{concessionarioId}}" } },
+        { "name": "Cliente - nome e cognome", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/query/nome-cognome?nome=Mario&cognome=Rossi" } },
+        { "name": "Concessionario - città", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/query/citta?citta=Roma" } },
+        { "name": "Concessionario - nome contiene", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/query/nome-contiene?sequenza=Auto" } },
+        { "name": "Concessionario - fatturato superiore", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/query/fatturato-superiore?importo=500000" } },
+        { "name": "Concessionario - fatturato tra valori", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/fatturato?min=100000&max=900000" } },
+        { "name": "Concessionario - Casa Madre ID", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/query/casa-madre-id/{{casaMadreId}}" } },
+        { "name": "Concessionario - Casa Madre ragione sociale", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/query/casa-madre-ragione-sociale?ragioneSociale=Auto%20Italia%20Group" } },
+        { "name": "Concessionario - città e fatturato", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/query/citta-fatturato-superiore?citta=Roma&importo=100000" } },
+        { "name": "Casa Madre - ragione sociale", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/query/ragione-sociale?ragioneSociale=Auto%20Italia%20Group" } },
+        { "name": "Casa Madre - paese", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/query/paese?paese=Italia" } },
+        { "name": "Casa Madre - paese senza case", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/query/paese-ignore-case?paese=italia" } },
+        { "name": "Casa Madre - anno fondazione", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/query/fondate-prima?anno=2000" } },
+        { "name": "Casa Madre - fatturato superiore", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/query/fatturato-superiore?importo=4000000" } },
+        { "name": "Casa Madre - ragione sociale contiene", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/query/ragione-sociale-contiene?sequenza=Auto" } }
+      ]
+    },
+    {
+      "name": "Query JPQL",
+      "item": [
+        { "name": "23 - Clienti per concessionario", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/concessionario/{{concessionarioId}}" } },
+        { "name": "24 - Concessionari per Casa Madre", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/casa-madre/Auto%20Italia%20Group" } },
+        { "name": "25 - Clienti per Casa Madre", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/casa-madre/{{casaMadreId}}" } },
+        { "name": "26 - Clienti per città concessionario", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/citta/Roma" } },
+        { "name": "27 - Clienti per paese Casa Madre", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/paese/Italia" } },
+        { "name": "28 - Ricerca dinamica clienti", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/search?nome=Mario&cognome=Rossi" } },
+        { "name": "28 - Ricerca dinamica solo nome", "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/search?nome=Mario" } },
+        { "name": "29 - Concessionari per città e fatturato", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/fatturato?min=100000&max=900000&citta=Roma" } },
+        { "name": "30 - Case Madri per paese e fatturato", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/query/paese-fatturato?paese=Italia&fatturatoMinimo=1000000" } },
+        { "name": "36 - Concessionari sopra la media", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/sopra-media" } },
+        { "name": "37 - Case Madri sopra la media", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/sopra-media" } },
+        { "name": "38 - Concessionari con clienti", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/con-clienti" } },
+        { "name": "39 - Case Madri senza concessionari", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/senza-concessionari" } },
+        { "name": "40 - Concessionari sopra media clienti", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/statistiche/sopra-media-clienti" } }
+      ]
+    },
+    {
+      "name": "Statistiche e aggregazioni",
+      "item": [
+        { "name": "31 - Numero concessionari per Casa Madre", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/statistiche/concessionari" } },
+        { "name": "32 - Numero clienti per concessionario", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/statistiche/clienti" } },
+        { "name": "33 - Fatturato totale concessionari per Casa Madre", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/statistiche/fatturato" } },
+        { "name": "34 - Fatturato medio concessionari", "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/statistiche/fatturato-medio" } },
+        { "name": "35 - Numero clienti per Casa Madre", "request": { "method": "GET", "url": "{{baseUrl}}/api/case-madri/statistiche/clienti" } }
+      ]
+    },
+    {
+      "name": "Test di gestione errori",
+      "item": [
+        {
+          "name": "400 - Dati cliente non validi",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"nome\":\"\",\"cognome\":\"Rossi\",\"email\":\"non-email\",\"dataRegistrazione\":null,\"concessionarioId\":0}" },
+            "url": "{{baseUrl}}/api/clienti"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('HTTP 400 Bad Request', function () { pm.response.to.have.status(400); });"] } }]
+        },
+        {
+          "name": "404 - Cliente inesistente",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/clienti/999999" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('HTTP 404 Not Found', function () { pm.response.to.have.status(404); });"] } }]
+        },
+        {
+          "name": "404 - Concessionario associato inesistente",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"nome\":\"Non valido\",\"cognome\":\"Test\",\"email\":\"missing-dealer@example.com\",\"dataRegistrazione\":\"2026-11-02\",\"concessionarioId\":999999}" },
+            "url": "{{baseUrl}}/api/clienti"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('HTTP 404 Not Found', function () { pm.response.to.have.status(404); });"] } }]
+        },
+        {
+          "name": "409 - Email già presente",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"nome\":\"Duplicato\",\"cognome\":\"Test\",\"email\":\"mario@email.it\",\"dataRegistrazione\":\"2026-11-02\",\"concessionarioId\":{{concessionarioId}}}" },
+            "url": "{{baseUrl}}/api/clienti"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('HTTP 409 Conflict', function () { pm.response.to.have.status(409); });"] } }]
+        },
+        {
+          "name": "409 - Casa Madre con concessionari",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/case-madri/{{casaMadreId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('HTTP 409 Conflict', function () { pm.response.to.have.status(409); });"] } }]
+        },
+        {
+          "name": "409 - Concessionario con clienti",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/concessionari/{{concessionarioId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('HTTP 409 Conflict', function () { pm.response.to.have.status(409); });"] } }]
+        },
+        {
+          "name": "400 - Query parameter mancante",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/concessionari/fatturato?min=100000" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('HTTP 400 Bad Request', function () { pm.response.to.have.status(400); });"] } }]
+        }
+      ]
+    }
+  ]
+}
