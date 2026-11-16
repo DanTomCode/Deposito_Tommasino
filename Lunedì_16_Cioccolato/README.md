@@ -1,13 +1,8 @@
-# Commit
+# Lista attività
 
-1. Analizzo i requisiti e definisco la struttura del progetto.
-
-2. Creo la classe base `Cioccolato`.
-
-3. Implemento i cioccolatini e il relativo prezzo.
-
-4. Implemento le tavolette con prezzo basato sul peso.
-
-5. Implemento la cioccolata calda con il costo minimo.
-
-6. Completo la fabbrica con `main`, limite giornaliero e risultati.
+1. Creo la classe base `Cioccolato` con i dati comuni.
+2. Implemento `Cioccolatino` con forma, ripieno e prezzo.
+3. Implemento `Tavoletta` con prezzo basato sul peso.
+4. Implemento `CioccolatoCaldo` con il costo minimo.
+5. Gestisco il limite giornaliero e il resoconto in `Fabbrica`.
+6. Aggiungo il `main` dimostrativo e la documentazione.
